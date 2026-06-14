@@ -11,7 +11,7 @@ This project investigates the capability of Machine Learning (ML) models to pred
 The core objective is to evaluate if modern regression architectures can accurately capture the non-linear heat transfer characteristics across a wide range of flow regimes without relying on simplified classical empirical equations.
 
 ### Core Question
-> Can ML models learn the complex relationship of $Nu = f(Re, Pr)$ directly from numerical/experimental datasets more effectively than traditional power-type correlations?
+> Can ML models learn the complex relationship of $Nu = f(Re, Pr)$ directly from experimental datasets?
 
 ---
 
