@@ -74,7 +74,7 @@ Which physics parameter drives the heat transfer most? Our ML models reveal the 
 
 1. **Clone the repository:**
 ```bash
-   git clone https://github.com/YOUR_USERNAME/nusselt-ml.git
+   git clone https://github.com/neg-shad/nusselt-ml.git
    cd nusselt-ml
 ```
 ---   
