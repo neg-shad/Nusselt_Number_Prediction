@@ -25,8 +25,11 @@ The dataset is derived from the research by **Taler & Taler**, covering a broad 
 | **Prandtl Number** | $Pr$ | $0.1$ to $10^3$ |
 | **Nusselt Number** | $Nu$ | Target Variable |
 
-**Data Source:** 
-*   *Taler, D., & Taler, J. "Simple heat transfer correlations for turbulent tube flow". Cracow University of Technology.*
+## Data Source
+
+Taler, D., & Taler, J. *Simple heat transfer correlations for turbulent tube flow*, Cracow University of Technology (2017).
+
+PDF: https://www.e3s-conferences.org/articles/e3sconf/pdf/2017/01/e3sconf_wtiue2017_02008.pdf
 
 ---
 
