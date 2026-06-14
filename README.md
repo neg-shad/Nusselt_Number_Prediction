@@ -65,11 +65,31 @@ Which physics parameter drives the heat transfer most? Our ML models reveal the 
 | :--- | :---: | :---: |
 | **Reynolds Number ($Re$)** | **72.55%** | **74.07%** |
 | **Prandtl Number ($Pr$)** | 27.45% | 25.93% |
+<p align="center">
+<p align="center">
+  <img src="./results/feature_importance_Random_Forest.png" width="45%" />
+  <img src="./results/feature_importance_XGBoost.png" width="45%" />
+</p>
 
 *Insight: As expected by fluid dynamics theory, the flow regime (Re) has approximately 2.7x more influence on the heat transfer coefficient than the fluid property (Pr).*
 
 ---   
+## Model Performance Comparison
 
+The following figure presents a comparison between actual and predicted Nusselt number (Nu) values using different machine learning models.
+
+<p align="center">
+  <img src="./results/predicted_vs_actual.png" width="1000">
+</p>
+
+### Models Evaluated
+- Linear Regression  
+- Random Forest  
+- Neural Network  
+- XGBoost  
+
+### Key Insight
+Tree-based models and neural networks show higher accuracy and better alignment with the ideal prediction line compared to linear regression.
 
 ## Installation
 ```bash
@@ -77,16 +97,4 @@ git clone https://github.com/YOUR_USERNAME/nusselt-ml.git
 cd nusselt-ml
 pip install -r requirements.txt
 ```
-## Run
 
-bash
-python main.py
-
----
-
-## Key Finding
-
-Feature importance analysis reveals whether $Re$ or $Pr$ dominates
-the prediction of $Nu$, providing physical insight alongside ML performance.
-
----
