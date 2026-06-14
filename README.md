@@ -6,56 +6,80 @@
 
 ## Overview
 
-This project investigates whether Machine Learning models can predict the **Nusselt number (Nu)**
-more accurately than classical empirical correlations (Dittus–Boelter) in forced convection
-inside a pipe.
+This project investigates the capability of Machine Learning (ML) models to predict the **Nusselt number (Nu)** using high-fidelity data points extracted from the study: **"Simple heat transfer correlations for turbulent tube flow"** by Dawid Taler and Jan Taler.
+
+The core objective is to evaluate if modern regression architectures can accurately capture the non-linear heat transfer characteristics across a wide range of flow regimes without relying on simplified classical empirical equations.
 
 ### Core Question
-> Can ML models outperform classical heat transfer correlations?
+> Can ML models learn the complex relationship of $Nu = f(Re, Pr)$ directly from numerical/experimental datasets more effectively than traditional power-type correlations?
 
 ---
 
-## Physics Background
+## Physics Background & Dataset
 
-For forced convection inside a pipe:
+The dataset is derived from the research by **Taler & Taler**, covering a broad spectrum of fluid properties and flow conditions. Unlike older models, these correlations are designed for high precision across transition and turbulent regimes.
 
-$$Nu = f(Re, Pr)$$
+| Parameter | Symbol | Range |
+|-----------|--------|-------|
+| **Reynolds Number** | $Re$ | $3 \cdot 10^3$ to $10^6$ |
+| **Prandtl Number** | $Pr$ | $0.1$ to $10^3$ |
+| **Nusselt Number** | $Nu$ | Target Variable |
 
-**Dittus–Boelter Correlation:**
+**Data Source:** 
+*   *Taler, D., & Taler, J. "Simple heat transfer correlations for turbulent tube flow". Cracow University of Technology.*
 
-$$Nu = 0.023 \cdot Re^{0.8} \cdot Pr^{0.4}$$
-
-| Symbol | Parameter       | Range Used       |
-|--------|----------------|------------------|
-| $Re$   | Reynolds Number | 5,000 – 100,000  |
-| $Pr$   | Prandtl Number  | 0.7 – 100        |
-| $Nu$   | Nusselt Number  | Target Variable  |
- 
 ---
 
-## Models Compared
+## Models Evaluated
 
-| Model             | Library              |
-|-------------------|----------------------|
-| Linear Regression | scikit-learn         |
-| Random Forest     | scikit-learn         |
-| XGBoost           | xgboost              |
-| Neural Network    | scikit-learn (MLP)   |
+The study implements and compares four distinct regression architectures:
+
+1.  **Linear Regression:** Baseline model to check for linear separability.
+2.  **Random Forest (Ensemble):** To capture non-linearities and handle feature interactions.
+3.  **XGBoost (Gradient Boosting):** High-performance tree boosting for tabular data.
+4.  **Neural Network (MLP):** A Multi-Layer Perceptron to model the underlying physics via backpropagation.
 
 ---
 
 ## Results
 
-| Model             | RMSE | MAE | R²   |
-|-------------------|------|-----|------|
-| Linear Regression | —    | —   | —    |
-| Random Forest     | —    | —   | —    |
-| XGBoost           | —    | —   | —    |
-| Neural Network    | —    | —   | —    |
+After training on **8,000 samples** and testing on **2,000 independent points**, the following performance metrics were achieved:
 
-> Results populate automatically after running `main.py`
+| Model | RMSE | MAE | R² |
+| :--- | :---: | :---: | :---: |
+| **Random Forest** | **17.5009** | **11.9222** | **0.9980** |
+| **Neural Network** | 18.5966 | 12.6691 | 0.9978 |
+| **XGBoost** | 95.7353 | 69.1699 | 0.9409 |
+| **Linear Regression** | 108.2712 | 79.6539 | 0.9244 |
+
+### Key Findings
+*   **Dominant Model:** Random Forest outperformed all other models with an **R² of 0.998**, suggesting an almost perfect capture of the Taler correlations.
+*   **Non-Linearity:** The significant performance gap between Random Forest and Linear Regression confirms the high degree of non-linearity in the $Nu$ relationship.
 
 ---
+
+## Feature Importance Analysis
+
+Which physics parameter drives the heat transfer most? Our ML models reveal the contribution of each dimensionless number:
+
+| Feature | Importance (Random Forest) | Importance (XGBoost) |
+| :--- | :---: | :---: |
+| **Reynolds Number ($Re$)** | **72.55%** | **74.07%** |
+| **Prandtl Number ($Pr$)** | 27.45% | 25.93% |
+
+*Insight: As expected by fluid dynamics theory, the flow regime (Re) has approximately 2.7x more influence on the heat transfer coefficient than the fluid property (Pr).*
+
+---
+
+## Installation & Usage
+
+1. **Clone the repository:**
+```bash
+   git clone https://github.com/YOUR_USERNAME/nusselt-ml.git
+   cd nusselt-ml
+```
+---   
+
 
 ## Installation
 ```bash
