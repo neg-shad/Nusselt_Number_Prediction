@@ -43,7 +43,6 @@ The study implements and compares four distinct regression architectures:
 
 ## Results
 
-After training on **8,000 samples** and testing on **2,000 independent points**, the following performance metrics were achieved:
 
 | Model | RMSE | MAE | R² |
 | :--- | :---: | :---: | :---: |
