@@ -68,15 +68,6 @@ Which physics parameter drives the heat transfer most? Our ML models reveal the 
 
 *Insight: As expected by fluid dynamics theory, the flow regime (Re) has approximately 2.7x more influence on the heat transfer coefficient than the fluid property (Pr).*
 
----
-
-## Installation & Usage
-
-1. **Clone the repository:**
-```bash
-   git clone https://github.com/neg-shad/nusselt-ml.git
-   cd nusselt-ml
-```
 ---   
 
 
