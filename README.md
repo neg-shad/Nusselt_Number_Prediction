@@ -1,4 +1,4 @@
-# Machine Learning-Based Prediction of Nusselt Number in Forced Convection
+# Machine-Learning-Based Prediction of the Nusselt Number in Turbulent Pipe Flow
 
 ![Python](https://img.shields.io/badge/Python-3.8+-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
