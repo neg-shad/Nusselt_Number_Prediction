@@ -56,6 +56,10 @@ Prandtl number:
 Nusselt number:
 7.86 ≤ Nu ≤ 31,968  
 
+<p align="center">
+  <img src="./results/nu_distribution.png" width="500">
+</p>
+
 
 
 ---
