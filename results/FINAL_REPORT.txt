@@ -1,0 +1,36 @@
+════════════════════════════════════════════════════════════════════════════════
+  NUSSELT NUMBER PREDICTION: FINAL REPORT
+════════════════════════════════════════════════════════════════════════════════
+
+DATASET INFORMATION
+--------------------------------------------------------------------------------
+Total samples:       160
+Training samples:    128
+Test samples:        32
+Features:            log10(Re), log10(Pr)
+Random state:        42
+
+COMBINED RESULTS (SORTED BY R²)
+--------------------------------------------------------------------------------
+            Model      Type       R²       RMSE        MAE
+         Petukhov Empirical 0.996714  83.975490  34.331320
+       Gnielinski Empirical 0.996594  85.506545  41.031783
+   Neural Network        ML 0.986887 167.762818 102.199522
+    Random Forest        ML 0.983426 188.608683  89.722574
+Linear Regression        ML 0.975680 228.472228 102.056430
+          XGBoost        ML 0.975493 229.349260  92.592577
+   Dittus-Boelter Empirical 0.918283 418.798079 174.527754
+      Sieder-Tate Empirical 0.851977 563.654244 243.718217
+
+BEST PERFORMERS
+--------------------------------------------------------------------------------
+Overall Best:              Petukhov (Empirical)
+Best ML Model:             Neural Network
+Best Empirical:            Petukhov
+
+RECOMMENDATIONS
+--------------------------------------------------------------------------------
+✓ Empirical correlations remain competitive for this dataset.
+✓ Petukhov provides excellent accuracy with physical interpretability.
+
+════════════════════════════════════════════════════════════════════════════════
