@@ -1,89 +1,164 @@
-# Machine-Learning-Based Prediction of the Nusselt Number in Turbulent Pipe Flow
+# 🔥 Nusselt Number Prediction Using Machine Learning and Empirical Correlations
 
 ![Python](https://img.shields.io/badge/Python-3.8+-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![ML](https://img.shields.io/badge/ML-Scikit--Learn-orange)
 
-## Overview
+---
 
-This project investigates the capability of Machine Learning (ML) models to predict the **Nusselt number (Nu)** using high-fidelity data points extracted from the study: **"Simple heat transfer correlations for turbulent tube flow"** by Dawid Taler and Jan Taler.
+## 📌 Overview
 
-The core objective is to evaluate if modern regression architectures can accurately capture the non-linear heat transfer characteristics across a wide range of flow regimes without relying on simplified classical empirical equations.
+Predicting the **Nusselt number (Nu)** is a fundamental task in convective heat transfer analysis, particularly for turbulent pipe flows.
 
-### Core Question
-> Can ML models learn the complex relationship of $Nu = f(Re, Pr)$ directly from experimental datasets?
+Traditionally, engineers rely on **empirical correlations** derived from experimental studies.  
+In this project, we investigate whether **Machine Learning (ML)** models can match or outperform classical correlations.
+
+This repository provides a **complete experimental pipeline**, including:
+
+- Data preprocessing and log transformation
+- Training multiple ML regression models
+- 5-fold cross-validation
+- Overfitting analysis
+- Implementation of classical empirical correlations
+- Comprehensive ML vs empirical comparison
+- Automated visualization and reporting
 
 ---
 
-## Physics Background & Dataset
+# 📊 Dataset
 
-The dataset is derived from the research by **Taler & Taler**, covering a broad spectrum of fluid properties and flow conditions. Unlike older models, these correlations are designed for high precision across transition and turbulent regimes.
+The dataset contains:
 
-| Parameter | Symbol | Range |
-|-----------|--------|-------|
-| **Reynolds Number** | $Re$ | $3 \cdot 10^3$ to $10^6$ |
-| **Prandtl Number** | $Pr$ | $0.1$ to $10^3$ |
-| **Nusselt Number** | $Nu$ | Target Variable |
+- Reynolds number (**Re**)
+- Prandtl number (**Pr**)
+- Nusselt number (**Nu**)
 
-## Data Source
+### Dataset Summary
 
-Taler, D., & Taler, J. *Simple heat transfer correlations for turbulent tube flow*, Cracow University of Technology (2017).
+- Total samples: **66**
+- Features: Re, Pr
+- Target: Nu
 
-PDF: https://www.e3s-conferences.org/articles/e3sconf/pdf/2017/01/e3sconf_wtiue2017_02008.pdf
+### Variable Ranges
 
----
+Reynolds number:
+3000 ≤ Re ≤ 1,000,000  
 
-## Models Evaluated
+Prandtl number:
+0.1 ≤ Pr ≤ 1000  
 
-The study implements and compares four distinct regression architectures:
-
-1.  **Linear Regression:** Baseline model to check for linear separability.
-2.  **Random Forest (Ensemble):** To capture non-linearities and handle feature interactions.
-3.  **XGBoost (Gradient Boosting):** High-performance tree boosting for tabular data.
-4.  **Neural Network (MLP):** A Multi-Layer Perceptron to model the underlying physics via backpropagation.
+Nusselt number:
+7.86 ≤ Nu ≤ 31,968  
 
 ---
 
-## Results
+## 🔄 Preprocessing
 
+Because of the wide dynamic range of variables, we applied:
 
-| Model | RMSE | MAE | R² |
-| :--- | :---: | :---: | :---: |
-| **Random Forest** | **17.5009** | **11.9222** | **0.9980** |
-| **Neural Network** | 18.5966 | 12.6691 | 0.9978 |
-| **XGBoost** | 95.7353 | 69.1699 | 0.9409 |
-| **Linear Regression** | 108.2712 | 79.6539 | 0.9244 |
+- `log10(Re)`
+- `log10(Pr)`
+- `log10(Nu)`
 
-### Key Findings
-*   **Dominant Model:** Random Forest outperformed all other models with an **R² of 0.998**, suggesting an almost perfect capture of the Taler correlations.
-*   **Non-Linearity:** The significant performance gap between Random Forest and Linear Regression confirms the high degree of non-linearity in the $Nu$ relationship.
+Then standardized features using:
+
+Train/Test split:
+
+- 80% Training
+- 20% Testing
+- Random seed = 42
 
 ---
 
-## Feature Importance Analysis
+# 🤖 Machine Learning Models
 
-Which physics parameter drives the heat transfer most? Our ML models reveal the contribution of each dimensionless number:
+The following regression models were evaluated:
 
-| Feature | Importance (Random Forest) | Importance (XGBoost) |
-| :--- | :---: | :---: |
-| **Reynolds Number ($Re$)** | **72.55%** | **74.07%** |
-| **Prandtl Number ($Pr$)** | 27.45% | 25.93% |
-<p align="center">
-<p align="center">
-  <img src="./results/feature_importance_Random_Forest.png" width="45%" />
-  <img src="./results/feature_importance_XGBoost.png" width="45%" />
-</p>
+1. Linear Regression  
+2. Random Forest  
+3. Neural Network (MLPRegressor)  
+4. XGBoost  
 
-*Insight: As expected by fluid dynamics theory, the flow regime (Re) has approximately 2.7x more influence on the heat transfer coefficient than the fluid property (Pr).*
+### ✅ Hold-out Test Results (log scale)
 
----   
+| Model | R² | RMSE | MAE |
+|-------|------|------|------|
+| Random Forest | 0.9897 | 0.0720 | 0.0553 |
+| XGBoost | 0.9891 | 0.0738 | 0.0543 |
+| Linear Regression | 0.9853 | 0.0860 | 0.0633 |
+| Neural Network | 0.9705 | 0.1217 | 0.0965 |
+
+Best ML model (test set): **Random Forest**
+
+---
+
+## 🔁 5-Fold Cross Validation
+
+All models passed the overfitting check.
+
+Gap between CV R² and Hold-out R² < 0.05  
+✅ No significant overfitting detected.
+
+---
+
+# 📘 Empirical Heat Transfer Correlations
+
+The following classical turbulent pipe flow correlations were implemented:
+
+1. Dittus–Boelter  
+2. Sieder–Tate  
+3. Gnielinski  
+4. Petukhov  
+
+### ✅ Empirical Results (Original Scale)
+
+| Correlation | R² | RMSE | MAE |
+|-------------|------|------|------|
+| Petukhov | 0.9967 | 83.98 | 34.33 |
+| Gnielinski | 0.9966 | 85.51 | 41.03 |
+| Dittus–Boelter | 0.9183 | 418.80 | 174.53 |
+| Sieder–Tate | 0.8520 | 563.65 | 243.72 |
+
+Best empirical correlation: **Petukhov**
+
+---
+
+# 🏆 Final Comparison (ML vs Empirical)
+
+| Model | Type | R² |
+|--------|--------|--------|
+| Petukhov | Empirical | **0.9967** |
+| Gnielinski | Empirical | 0.9966 |
+| Neural Network | ML | 0.9869 |
+| Random Forest | ML | 0.9834 |
+
+## ✅ Overall Best Performer:
+**Petukhov Correlation**
+
+---
+
+# 📈 Key Findings
+
+The results show that machine learning models can achieve very high predictive accuracy when trained on heat transfer data. However, for the current dataset and parameter range, classical empirical correlations remain highly competitive.
+
+The Petukhov correlation slightly outperformed all machine learning models in terms of the coefficient of determination.
+
+This outcome is expected because empirical correlations are derived from extensive experimental studies and incorporate underlying physical relationships.
+
+Nevertheless, machine learning approaches may become advantageous when:
+
+- additional physical parameters are included
+- datasets become larger
+- complex geometries or multi-physics effects are considered
+---
 ## Model Performance Comparison
 
 The following figure presents a comparison between actual and predicted Nusselt number (Nu) values using different machine learning models.
 
 <p align="center">
-  <img src="./results/predicted_vs_actual.png" width="1000">
+  <img src="./results/predictions_comparison_all.png" width="1000">
 </p>
+
 
 ### Models Evaluated
 - Linear Regression  
@@ -91,8 +166,6 @@ The following figure presents a comparison between actual and predicted Nusselt 
 - Neural Network  
 - XGBoost  
 
-### Key Insight
-Tree-based models and neural networks show higher accuracy and better alignment with the ideal prediction line compared to linear regression.
 
 ## Installation
 ```bash
