@@ -27,6 +27,12 @@ This repository provides a **complete experimental pipeline**, including:
 
 # 📊 Dataset
 
+The dataset used in this study comprises **N = 66** experimental data points, sourced from the seminal work by **Sieder and Tate (1936)**. This classical study provides fundamental experimental data for heat transfer in turbulent pipe flows and has served as the basis for several widely used empirical correlations in convective heat transfer analysis.
+
+> **Reference**  
+> Sieder, E. N., & Tate, G. E. (1936). *Heat Transfer and Pressure Drop of Liquids in Tubes*. *Industrial & Engineering Chemistry*, **28**(12), 1429–1435. https://doi.org/10.1021/ie50324a027
+
+
 The dataset contains:
 
 - Reynolds number (**Re**)
@@ -49,6 +55,8 @@ Prandtl number:
 
 Nusselt number:
 7.86 ≤ Nu ≤ 31,968  
+
+
 
 ---
 
